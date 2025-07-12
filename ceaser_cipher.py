@@ -1,79 +1,55 @@
 import string
 alphabet = list(string.ascii_lowercase)
 
+def normalize_shift(shift_amount):
+    return shift_amount % 26
 
-
-game_on = True
-
-
-
-#encode
-def encrypt(message_list,shift):
-
+# encode
+def encrypt(message_list, shift_amount):
     text_e = message_list
-    while shift > 25:
-        shift-=25
-    else:
-        for i in range(len(text_e)):
-            if text_e[i] not in alphabet:
-                pass
-            else:
-                letter = text_e[i]
-                new_ind = alphabet.index(letter) + shift
-                if new_ind>25:
-                    new_ind-=26
-                elif new_ind<0:
-                    new_ind +=26
 
-                text_e[i] = alphabet[new_ind]
-        print("".join(text_e))
-        
-    
+    for i in range(len(text_e)):
+        if text_e[i] not in alphabet:
+            pass
+        else:
+            letter = text_e[i]
+            new_ind = normalize_shift(alphabet.index(letter) + shift_amount)
+            text_e[i] = alphabet[new_ind]
+    print(f"Encoded message:{"".join(text_e)}")
+         
 
-#decode
-def decrypt(message_list,shift):
-    text_e = message_list
-    while shift > 25:
-        shift-=25
-    else:
-        for i in range(len(text_e)):
-            if text_e[i] not in alphabet:
-                pass
-            else:
-                letter = text_e[i]
-                new_ind = alphabet.index(letter) - shift
-                if new_ind>25:
-                    new_ind-=26
-                elif new_ind<0:
-                    new_ind +=26
-                text_e[i] = alphabet[new_ind]
-        print("".join(text_e))
+# decode
+def decrypt(message_list, shift_amount):
+    text_d = message_list
 
+    for i in range(len(text_d)):
+        if text_d[i] not in alphabet:
+            pass
+        else:
+            letter = text_d[i]
+            new_ind = normalize_shift(alphabet.index(letter) - shift_amount)
+            text_d[i] = alphabet[new_ind]
+    print(f"Decoded message:{"".join(text_d)}")
 
+def main():
+    while True:
+        code_type= input("Type encode to 'encrypt'. Type decode to 'decrypt':")
+        original_text = input("Type your message: ").lower()
+        shift_amount = int(input("Type shift amount: "))
+        origin_list = list(original_text)
 
+        if code_type == "encode":
+            encrypt(origin_list,shift_amount)
+            
+        elif code_type == "decode":
+            decrypt(origin_list, shift_amount)
 
-
-
-while game_on:
-    code_type= input("Type encode to 'encrypt'. Type decode to 'decrypt':")
-    original_text = input("Type your message: ").lower()
-    shift = int(input("Type shift amount: "))
-    origin_list = list(original_text)
-
-    if code_type== "encode":
-        encrypt(origin_list,shift)
-        
-    elif code_type== "decode":
-        decrypt(origin_list,shift)
-
-    cont  = input("Do you want to continue the game? Type: 'Yes' or 'No'")
-    if cont == "Yes":
-        game_on= 1
-    else:
-        game_on = 0
-        break
-
-    
+        game_on = input(
+            "Do you want to continue the game? Type: 'Yes' or 'No'"
+            ).lower()
+        if game_on == "no":
+            break
 
 
-
+if __name__ == "__main__":
+    main()
