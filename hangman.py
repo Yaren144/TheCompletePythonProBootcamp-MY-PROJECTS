@@ -8,94 +8,108 @@ import random
 #                     __/ |                      
 #                     |___/                       
 # ''')
+
 HANGMANPICS = ['''
-+---+
-|   |
-    |
-    |
-    |
-    |
+  +---+
+  |   |
+      |
+      |
+      |
+      |
 =========''', '''
-+---+
-|   |
-O   |
-    |
-    |
-    |
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
 =========''', '''
-+---+
-|   |
-O   |
-|   |
-    |
-    |
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
 =========''', '''
-+---+
-|   |
-O   |
-/|  |
-    |
-    |
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
 =========''', '''
-+---+
-|   |
-O   |
-/|\ |
-    |
-    |
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
 =========''', '''
-+---+
-|   |
-O   |
-/|\ |
-/   |
-    |
-=========''', 
-'''
-+----+
-|    |
-O    |
-/|\  |
-/ \  |
-        |
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
 =========''']
 
 #Word bank of animals
 words = ('ant baboon badger bat bear beaver camel cat clam cobra cougar '
-        'coyote crow deer dog donkey duck eagle ferret fox frog goat '
-        'goose hawk lion lizard llama mole monkey moose mouse mule newt '
-        'otter owl panda parrot pigeon python rabbit ram rat raven '
-        'rhino salmon seal shark sheep skunk sloth snake spider '
-        'stork swan tiger toad trout turkey turtle weasel whale wolf '
-        'wombat zebra ').split()
+         'coyote crow deer dog donkey duck eagle ferret fox frog goat '
+         'goose hawk lion lizard llama mole monkey moose mouse mule newt '
+         'otter owl panda parrot pigeon python rabbit ram rat raven '
+         'rhino salmon seal shark sheep skunk sloth snake spider '
+         'stork swan tiger toad trout turkey turtle weasel whale wolf '
+         'wombat zebra ').split()
+ 
 
-d_list = ["car"]
+#Checking the game system with determined one word
+check_word = ["cart"]
 lives = 0
 
-answer = random.choice(d_list)
+answer = random.choice(words)
 answerList = list(answer)
 print(answerList)
 blanks = len(answer)
 
-guessList =["_"] * blanks
-print(guessList)
-print(f"Word to guess: {"_ " * blanks}")
+guessList =["_"]  * blanks
+guessString = " ".join(guessList)
+print(f"Word to guess: {guessString}")
 guessLetter = input("Guess a letter: ")
-
-LetterList = [guessLetter]
-
+checkedList = []
 
 def letterCheck(let):
         global lives
-        if let not in answerList:
-            lives += 1
-            print(f"You guessed {guessLetter}. That's not in the word. YOU LOSE A LIFE.\n")
+        global checkedList
 
-        for i in range(len(answerList)):
-            if answerList[i] == let and guessList[i] != let:
-                guessList[i] = let
-    
-        letterFinder(let)            
+        if (let not in  answerList) and (let in checkedList):
+            print(f"You've already guessed {let}") 
+            lives += 1
+            
+        elif (let not in  answerList) and (let not in checkedList):
+            
+            print(f"You guessed {guessLetter}. That's not in the word. YOU LOSE A LIFE.\n")
+            checkedList.append(let) 
+            lives += 1
+
+        elif let in answerList:
+            for i in range (len(guessList)):
+                 if answerList[i]== let:
+                      guessList[i] = let
+
+                      
+        
+
+
+        
+              
         printHangman()        
 
 
@@ -104,29 +118,30 @@ def printHangman():
     print(HANGMANPICS[lives])
     print(f"*********{6 -lives} LIVES LEFT******")
 
-def letterFinder(let):
-    if let not in LetterList:
-        LetterList.append(let) 
-    
-    else:
-        print(f"You've already guessed {let}")
+
 
 
 while lives != 6 :
         
-    letterCheck(guessLetter)
-    if guessList == answerList and lives != 6:
-        print("YOU WIN!!")
-    else:
     
-        print(guessList)
-        print(f"Word to guess: {guessList}")
-        guessLetter = input("Guess a letter: ")
+
+    if guessList == answerList:
+        print("YOU WIN!!")
+        break
+    else:
         letterCheck(guessLetter)
+        print(guessList)
+        guessString = " ".join(guessList)
+        if guessList == answerList:
+            print("YOU WIN!!")
+            break
+        print(f"Word to guess: {guessString}")
+        guessLetter = input("Guess a letter: ")
+        
 
                 
-if lives == 6:
-        print(f"*********IT WAS {answerList} YOU LOSE!!!********")
+else:
+        print(f"*********IT WAS {answer} YOU LOSE!!!********")
     
 
 
