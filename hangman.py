@@ -1,5 +1,5 @@
 import random
-#print( ''')                                             
+print( ''')                                             
 # | |                                            
 # | |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  
 # | '_ \ / _` | '_ \ / _` | '_ ` _ \ / _` | '_ \ 
@@ -141,7 +141,7 @@ while lives != 6 :
 
                 
 else:
-        print(f"*********IT WAS {answer} YOU LOSE!!!********")
+        print(f"*********IT WAS '{answer}' YOU LOSE!!!********")
     
 
 
