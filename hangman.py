@@ -9,6 +9,11 @@ print( ''')
 #                     |___/                       
 # ''')
 
+# ASCII Art below is from a GitHub Gist by Chris Horton
+# Source: https://gist.github.com/chrishorton/8510732aa9a80a03c829b09f12e20d9c
+# License: Public Gist (no specific license given - attribution included)
+
+
 HANGMANPICS = ['''
   +---+
   |   |
