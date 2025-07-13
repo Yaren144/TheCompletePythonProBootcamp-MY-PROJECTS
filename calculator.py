@@ -46,12 +46,12 @@ def multiply(a, b):
     return a * b
 
 def divide(a, b):
-    if b == 0:
-        print("Zero Division error.")
-        return None
-    
-    else:
+    try:
         return a / b
+    except ZeroDivisionError:
+        print("Error: Cannot divide by zero.")
+        return None
+
 
 
 def main():
